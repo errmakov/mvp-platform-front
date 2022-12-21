@@ -33,7 +33,7 @@ export const options: NextAuthOptions  = {
           body: JSON.stringify(payload),
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic cGxhdDp1c3JvZnBsYXQ='
+            'Authorization': 'Basic ' + process.env.AUTH_BASIC_TOKEN
           },
         });
 
@@ -43,7 +43,7 @@ export const options: NextAuthOptions  = {
       },
     }),
   ],
-  //secret: process.env.JWT_SECRET,
+  
   secret: process.env.NEXT_PUBLIC_SECRET,
   pages: {
     //signIn: '/signin',

@@ -15,7 +15,7 @@ export default async function signup(req: NextApiRequest, resp: NextApiResponse<
 console.log('payload:', payload)
       try {
 
-      const res = await fetch('http://213.183.48.143:8123/api/oauth/profile', {
+      const res = await fetch(process.env.API_URL + '/api/oauth/profile', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
