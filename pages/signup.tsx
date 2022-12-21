@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>MVP Platform App / Let's sign up</title>
+        <title>MVP Platform App / Let&apos;s sign up</title>
         <meta name="description" content="Foo Bar Description" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

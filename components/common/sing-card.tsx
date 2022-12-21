@@ -16,7 +16,7 @@ export default function SignCard(props: Props) {
                   Sign out <span>-&gt;</span>
                 </h2>
                 <p className={styles.className}>
-                  I'm done.
+                  I&apos;m done.
                 </p>
               </Link>
       )

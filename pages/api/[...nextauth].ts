@@ -1,5 +1,4 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
-import axios, {AxiosResponse, AxiosRequestConfig} from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -23,12 +22,12 @@ export const options: NextAuthOptions  = {
         const payload = {
           email: credentials?.username,
           password: credentials?.password,
-          scope: 'we1b',
+          scope: 'web',
           grant_type:  'password'
         };
 
         console.log('Going authorize')
-        const res = await fetch('http://213.183.48.143:8123/api/oauth/token', {
+        const res = await fetch(process.env.API_URL + '/api/oauth/token', {
           method: 'POST',
           body: JSON.stringify(payload),
           headers: {
@@ -68,5 +67,5 @@ export const options: NextAuthOptions  = {
   
   } 
 }
-
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options)
+const nextAuth = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options)
+export default nextAuth
