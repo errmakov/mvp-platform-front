@@ -1,6 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import { NextApiRequest, NextApiResponse } from 'next'
-import CredentialsProvider from 'next-auth/providers/credentials';
+import axios, {AxiosResponse, AxiosRequestConfig} from 'axios'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import queryString from 'querystring'
 
 
 export const options: NextAuthOptions  = {
@@ -20,25 +22,32 @@ export const options: NextAuthOptions  = {
       },
       async authorize(credentials, req) {
         const payload = {
-          email: credentials?.username,
+          username: credentials?.username,
           password: credentials?.password,
-          scope: 'web',
-          grant_type:  'password'
-        };
-
+          scope: "web",
+          grant_type:  "password"
+        }
         console.log('Going authorize')
-        const res = await fetch(process.env.API_URL + '/api/oauth/token', {
-          method: 'POST',
-          body: JSON.stringify(payload),
+        return axios.post(process.env.API_URL + '/api/oauth/token', queryString.stringify(payload),{
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + process.env.AUTH_BASIC_TOKEN
+            'Content-Type': 'application/x-www-form-urlencoded', 
+            'Authorization': 'Basic ' + process.env.API_AUTH_BASICTOKEN
           },
-        });
-
-        const user = await res.json();
-        console.log('User: ', user)
-        return user
+          })
+          .then((resp) => {
+              console.log('process.env.API_URL: ', process.env.API_URL + '/api/oauth/token')
+              console.log('process.env.API_AUTH_BASICTOKEN: ', process.env.API_AUTH_BASICTOKEN)
+              console.log('JSON.stringify(payload): ', queryString.stringify(payload))
+              console.log('Authorize req: ', req)
+              const user = resp.data
+              console.log('User: ', user)
+              return user            
+          })
+          .catch((e)=>{
+              console.log(e)
+              return false
+          })
+        
       },
     }),
   ],
